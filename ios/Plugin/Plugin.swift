@@ -23,6 +23,7 @@ public class DatePickerPlugin: CAPPlugin {
     private var defaultPickerMinDate: String? = nil
     private var defaultPickerMaxDate: String? = nil
     private var defaultPickerTitle: String? = nil
+    private var defaultPickerTitleFormat: String? = nil
     private var defaultPickerTitleFontColor: String = "#000000"
     private var defaultPickerTitleBgColor: String = "#ffffff"
     private var defaultPickerBgColor: String = "#ffffff"
@@ -43,6 +44,7 @@ public class DatePickerPlugin: CAPPlugin {
     private var pickerMinDate: String? = nil
     private var pickerMaxDate: String? = nil
     private var pickerTitle: String? = nil
+    private var pickerTitleFormat : String? = nil
     private var pickerMergedDateAndTime: Bool = false;
     
     private var call: CAPPluginCall?
@@ -82,6 +84,7 @@ public class DatePickerPlugin: CAPPlugin {
         self.defaultPickerDoneText = self.bridge.config.getString(self.CONFIG_KEY_PREFIX + "doneText") ?? self.defaultPickerDoneText
         self.defaultPicker24h = self.bridge.config.getValue(self.CONFIG_KEY_PREFIX + "is24h") as? Bool ?? self.defaultPicker24h
         self.defaultPickerTitle = self.bridge.config.getString(self.CONFIG_KEY_PREFIX + "title") ?? self.defaultPickerTitle
+        self.defaultPickerTitleFormat = self.bridge.config.getString(self.CONFIG_KEY_PREFIX + "titleFormat") ?? self.defaultPickerTitleFormat
         self.defaultPickerTitleFontColor = self.bridge.config.getString(self.CONFIG_KEY_PREFIX + "titleFontColor") ?? self.defaultPickerTitleFontColor
         self.defaultPickerTitleBgColor = self.bridge.config.getString(self.CONFIG_KEY_PREFIX + "titleBgColor") ?? self.defaultPickerTitleBgColor
         self.defaultPickerBgColor = self.bridge.config.getString(self.CONFIG_KEY_PREFIX + "bgColor") ?? self.defaultPickerBgColor
@@ -101,6 +104,7 @@ public class DatePickerPlugin: CAPPlugin {
         self.pickerMinDate = self.call?.getString("min") ?? nil
         self.pickerMaxDate = self.call?.getString("max") ?? nil
         self.pickerTitle = self.call?.getString("title") ?? self.defaultPickerTitle
+        self.pickerTitleFormat = self.call?.getString("titleFormat") ?? self.defaultPickerTitle
         self.pickerCancelText = self.call?.getString("cancelText") ?? self.defaultPickerCancelText
         self.pickerDoneText = self.call?.getString("doneText") ?? self.defaultPickerDoneText
         self.picker24h = self.call?.getBool("is24h") ?? self.defaultPicker24h
@@ -290,11 +294,14 @@ public class DatePickerPlugin: CAPPlugin {
     
     @objc func titleChange(_ date: Date) -> String{
         if (self.pickerTitle == nil) {
-            var format: String = self.picker24h ? "E, MMM d, yyyy HH:mm" : "E, MMM d, yyyy hh:mm a"
-            if (self.pickerMode == "time") {
-                format = self.picker24h ? "HH:mm" : "hh:mm a"
-            } else if (self.pickerMode == "date") {
-                format = "E, MMM d, yyyy"
+            var format: String? = self.pickerTitleFormat
+            if (format==nil) {
+                format =  self.picker24h ? "E, MMM d, yyyy HH:mm" : "E, MMM d, yyyy hh:mm a"
+                if (self.pickerMode == "time") {
+                    format = self.picker24h ? "HH:mm" : "hh:mm a"
+                } else if (self.pickerMode == "date") {
+                    format = "E, MMM d, yyyy"
+                }
             }
             return self.parseDateFromObject(date: date, format: format)
         }

@@ -1,7 +1,7 @@
 PODS:
-  - Capacitor (2.2.1):
+  - Capacitor (2.4.4):
     - CapacitorCordova
-  - CapacitorCordova (2.2.1)
+  - CapacitorCordova (2.4.4)
 
 DEPENDENCIES:
   - "Capacitor (from `../node_modules/@capacitor/ios`)"
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
-  Capacitor: 04d3276e3f433e4d3840a89cf700b1cd398bf8f2
-  CapacitorCordova: 84832ae8993607db6fdb56900af620409c0c8eaf
+  Capacitor: 2dad300a670be7ab8fc8d91d09f1126cf777b8e9
+  CapacitorCordova: da4e0a9d94c697f9bba4a48749ce85efe142912c
 
 PODFILE CHECKSUM: 18edf3816e869cc37578950affc00fdd78ee0dcb
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

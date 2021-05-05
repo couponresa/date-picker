@@ -92,7 +92,24 @@ export interface DatePickerOptions {
    * @description hex string for title font color
    * @note Only IOS
    */
+
   titleFontColor?: string;
+   /**
+   * @type {string}
+   * @default null
+   * 
+   * @description hex string for title 
+   * @note Only IOS
+   */
+  title?: string;
+  /**
+  * @type {string}
+  * @default null
+  * 
+  * @description hex string for title date format
+  * @note Only IOS
+  */
+ titleFormat?: string;
   /**
    * @type {string}
    * @default null
