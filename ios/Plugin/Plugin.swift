@@ -7,6 +7,26 @@ import Capacitor
  * Created by Stewan Silva on 07/07/2019
  */
 
+
+extension String {
+    var pascalCase: String {
+        return self.components(separatedBy: " ")
+            .map {
+                if $0.count <= 3 {
+                    return $0.uppercased()
+                } else {
+                    if $0.firstIndex(of: "-") != nil {
+                        return $0.components(separatedBy: "-").map { $0.pascalCase }.joined(separator: "-")
+                    } else {
+                        return $0.capitalized
+                    }
+                }
+            }
+            .joined(separator: " ")
+    }
+}
+
+
 @objc(DatePickerPlugin)
 public class DatePickerPlugin: CAPPlugin {
     public let CONFIG_KEY_PREFIX = "plugins.DatePickerPlugin.ios-"
@@ -303,7 +323,7 @@ public class DatePickerPlugin: CAPPlugin {
                     format = "E, MMM d, yyyy"
                 }
             }
-            return self.parseDateFromObject(date: date, format: format)
+            return self.parseDateFromObject(date: date, format: format).pascalCase
         }
         return self.pickerTitle!
     }
